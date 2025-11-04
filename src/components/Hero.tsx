@@ -6,7 +6,10 @@ const Hero: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center sm:mb-8 md:mb-16 lg:mb-16">
           <p className="text-[36px] md:text-[42px] text-left md:text-center lg:text-center lg:text-[42px] font-medium text-gray-900 mb-8">
-            I'm a <span className="decorative-hero-text">design engineer </span>{" "}
+            I'm a{" "}
+            <span className="decorative-hero-text rotating">
+              design engineer{" "}
+            </span>{" "}
             determined to build products that <br></br> understand{" "}
             <span className="decorative-subtext">human behaviour</span>
           </p>

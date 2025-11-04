@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { getProjects } from "../lib/sanity";
-import {
-  XLogoIcon,
-  LinkedinLogoIcon,
-  MediumLogoIcon,
-  GlobeIcon,
-} from "@phosphor-icons/react";
+import { socialLinks } from "@/lib/constants";
 
 type MenuOverlayProps = {
   isOpen: boolean;
@@ -17,33 +12,6 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
   const [projects, setProjects] = useState<
     { _id: string; slug?: { current: string }; projectName?: string }[]
   >([]);
-
-  const socialLinks = [
-    {
-      _id: 1,
-      name: "Twitter",
-      icon: <XLogoIcon size={32} weight="bold" />,
-      url: "https://x.com/swarnaa_k",
-    },
-    {
-      _id: 2,
-      name: "LinkedIn",
-      url: "https://www.linkedin.com/in/swarna-kadagadkai/",
-      icon: <LinkedinLogoIcon size={32} weight="bold" />,
-    },
-    {
-      _id: 3,
-      name: "Medium",
-      url: "https://medium.com/@swarnak",
-      icon: <MediumLogoIcon size={32} weight="bold" />,
-    },
-    {
-      _id: 4,
-      name: "Behance",
-      url: "https://www.behance.net/swarnakadagad",
-      icon: <GlobeIcon size={32} weight="bold" />,
-    },
-  ];
 
   useEffect(() => {
     if (!isOpen) return;
@@ -150,6 +118,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                       href={link.url}
                       onClick={onClose}
                       className="text-2xl text-gray-900 hover:text-gray-900 hover:underline"
+                      title={link.name}
                     >
                       {link.icon}
                     </a>

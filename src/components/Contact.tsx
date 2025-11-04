@@ -1,11 +1,6 @@
-const Contact: React.FC = () => {
-  const socialLinks = [
-    { name: "Twitter", url: "https://x.com/swarnaa_k" },
-    { name: "LinkedIn", url: "https://www.linkedin.com/in/swarna-kadagadkai/" },
-    { name: "Medium", url: "https://medium.com/@swarnak" },
-    { name: "Behance", url: "https://www.behance.net/swarnakadagad" },
-  ];
+import { socialLinks } from "@/lib/constants";
 
+const Contact: React.FC = () => {
   return (
     <section className="h-[500px] py-16 w-full">
       <div className="w-full px-16">

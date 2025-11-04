@@ -45,14 +45,26 @@ img {
   height: auto;
 }
 
+.rotating {
+  display: inline-block;
+  transform: rotate(5deg);
+  animation: tilt 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) 0.4s infinite alternate;
+}
 
+@keyframes tilt {
+  from {
+    transform: rotate(5deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
 
 .decorative-hero-text {
   background-image: url('/images/Frame 3.png');
   background-repeat: repeat;
   background-size: cover;
   opacity: 0.8;
-  padding-left: 0.6rem;
   margin-left: 0.3rem;
   margin-right: 0.3rem;
 }
@@ -75,7 +87,4 @@ img {
     padding-bottom: 2rem;
   }
 
-  .decorative-hero-text {
-    padding-left: 0rem;
-  }
 }

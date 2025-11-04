@@ -15,7 +15,7 @@ const About: React.FC = () => {
             className="flex gap-2 items-center font-medium text-xl hover:underline"
           >
             <span className="decorative-subheading">About me </span>{" "}
-            <ArrowRightIcon size={20} />
+            <ArrowRightIcon size={24} />
           </a>
         </div>
 
