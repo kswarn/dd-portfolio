@@ -78,7 +78,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
       />
 
       {/* Right panel (half screen) */}
-      <div className="absolute right-0 top-0 h-full w-1/2 min-w-[320px] max-w-[720px] bg-white shadow-2xl border-l border-gray-200 overflow-y-auto">
+      <div className="absolute right-0 top-0 h-full md:w-1/2 lg:w-1/2 w-full min-w-[320px] bg-white shadow-2xl border-l border-gray-200 overflow-y-auto">
         <div className="p-8 sm:p-12 h-full flex flex-col gap-12">
           <div className="flex justify-end">
             <button
@@ -90,7 +90,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
             </button>
           </div>
 
-          <nav className="flex flex-col h-full justify-between">
+          <nav className="flex flex-col h-1/2 md:h-full lg:h-full justify-between">
             <div className="flex flex-col gap-4">
               <div>
                 <a

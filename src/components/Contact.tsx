@@ -13,7 +13,7 @@ const Contact: React.FC = () => {
         <div className="bg-[#f9f9f9] rounded-3xl p-16 mb-16 h-[300px] flex items-center justify-center">
           <div className="text-center space-y-8">
             <h3 className="text-3xl font-medium text-gray-900">
-              Question about my work?
+              Questions about my work?
             </h3>
             <h3 className="text-3xl font-medium">
               <a
@@ -27,7 +27,7 @@ const Contact: React.FC = () => {
         </div>
 
         {/* Footer */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           <div>
             <p className="text-lg text-gray-600">
               Swarna Kadagadkai — September 2025

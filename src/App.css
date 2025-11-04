@@ -45,6 +45,24 @@ img {
   height: auto;
 }
 
+
+
+.decorative-hero-text {
+  background-image: url('Frame 3.png');
+  background-repeat: repeat;
+  background-size: cover;
+  opacity: 0.8;
+  padding-left: 0.6rem;
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+}
+
+
+.decorative-subtext {
+  background-image: url('Frame 5.png');
+  background-size: 320px 50px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .px-16 {
@@ -55,5 +73,9 @@ img {
   .py-16 {
     padding-top: 2rem;
     padding-bottom: 2rem;
+  }
+
+  .decorative-hero-text {
+    padding-left: 0rem;
   }
 }

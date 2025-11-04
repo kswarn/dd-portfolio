@@ -45,8 +45,6 @@ const AboutPage: React.FC = () => {
       url: "https://medium.com/@swarnak/host-your-flask-app-on-amazon-ecs-part-1-ci-cd-pipeline-36d795ea9dac",
       title: "Hosting a Flask app on Amazon ECS",
     },
-
-    {},
   ];
   return (
     <div className="flex flex-col gap-56">
@@ -55,14 +53,14 @@ const AboutPage: React.FC = () => {
         <div className="max-w-7xl mx-auto flex flex-col gap-16">
           {/* Text Content */}
           <div className="space-y-8">
-            <h3 className="text-4xl font-medium text-gray-900 text-center leading-14">
+            <h3 className="text-4xl font-medium text-gray-900 text-left md:text-center leading-14">
               Austin-based Design Engineer building experiences that <br></br>
               elevate the lives of people and accelerate business
             </h3>
           </div>
 
           {/* Image Grid */}
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4">
             <div className="aspect-auto overflow-hidden">
               <img
                 src="https://framerusercontent.com/images/NhyMYcYfjdNttDxOGVTOzwmnu0.jpg"
@@ -105,10 +103,13 @@ const AboutPage: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="w-1/2 flex flex-col gap-8">
+        <div className="w-full md:w-1/2 lg:w-1/2 flex flex-col gap-8">
           <p className="text-3xl font-medium leading-12">
-            I’m currently a graduate student majoring in <br></br> Human
-            Computer Interaction and UX at <br></br> UT Austin
+            I’m currently a graduate student majoring in <br></br>{" "}
+            <span className="decorative-subtext">
+              Human Computer Interaction and UX{" "}
+            </span>{" "}
+            at UT Austin
           </p>
           <div className="flex flex-col gap-4 font-medium text-lg">
             {" "}
@@ -140,7 +141,7 @@ const AboutPage: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12">
           <div>
             <p className="text-3xl font-semibold">Experience</p>
             <ul>

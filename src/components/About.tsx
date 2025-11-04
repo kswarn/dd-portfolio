@@ -3,7 +3,7 @@ import { ArrowRightIcon } from "@phosphor-icons/react";
 const About: React.FC = () => {
   return (
     <section className="py-48 px-16">
-      <div className="mx-auto grid grid-cols-2 gap-16">
+      <div className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-16">
         {/* Text Content */}
         <div className="space-y-8">
           <h3 className="text-3xl font-medium text-gray-900 text-left leading-12">
@@ -14,7 +14,8 @@ const About: React.FC = () => {
             href="/about"
             className="flex gap-2 items-center font-medium text-xl hover:underline"
           >
-            About me <ArrowRightIcon size={20} />
+            <span className="decorative-subheading">About me </span>{" "}
+            <ArrowRightIcon size={20} />
           </a>
         </div>
 

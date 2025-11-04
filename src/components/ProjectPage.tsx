@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { PortableText } from "@portabletext/react";
-import type { PortableTextBlock } from "@portabletext/types";
+// import { PortableText } from "@portabletext/react";
+// import type { PortableTextBlock } from "@portabletext/types";
 import type { SanityProject } from "../types/sanity";
 import { getProjectBySlug, urlFor } from "../lib/sanity";
+import Header from "./Header";
+import Contact from "./Contact";
 
 export default function ProjectPage() {
   const { slug } = useParams<{ slug: string }>();
   const [project, setProject] = useState<SanityProject | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
+
+  console.log(project);
 
   useEffect(() => {
     if (!slug) return;
@@ -51,58 +55,110 @@ export default function ProjectPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="pt-28 pb-16 px-6 md:px-12 lg:px-16 max-w-5xl mx-auto">
-        <Link to="/" className="text-sm text-gray-600 hover:underline">
-          ← Back
-        </Link>
-        <h1 className="mt-4 text-3xl md:text-5xl font-semibold text-gray-900">
-          {project.projectName}
-        </h1>
-        {project.projectSubtitle && (
-          <p className="mt-3 text-base md:text-lg text-gray-700">
-            {project.projectSubtitle}
-          </p>
-        )}
+      <Header />
+      <div className="pt-28 pb-16 px-8 md:px-12 flex flex-col gap-12 lg:px-16 max-w-5xl mx-auto">
+        <div className="flex flex-col gap-6">
+          <h1 className="text-3xl md:text-5xl font-semibold text-gray-900">
+            {project.projectName}
+          </h1>
+          {project.projectSubtitle && (
+            <p className="text-base md:text-lg text-gray-700">
+              {project.projectSubtitle}
+            </p>
+          )}
 
-        {(project.status || (project.tags?.length ?? 0) > 0) && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {project.status && (
-              <span className="text-xs px-2 py-1 rounded-full bg-gray-900 text-white">
-                {project.status}
-              </span>
+          {(project.tags?.length ?? 0) && (
+            <div className="flex flex-wrap gap-2">
+              {project.status && (
+                <span className="text-md px-4 py-2 rounded-full bg-gray-900 text-white">
+                  {project.status}
+                </span>
+              )}
+              {project.tags?.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-md px-4 py-2 rounded-full bg-gray-100 text-gray-700"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="mt-4">
+          {project.outcomeImage?.[0] && (
+            <div className="rounded-2xl overflow-hidden">
+              <img
+                src={urlFor(project.outcomeImage[0])
+                  .quality(90)
+                  .fit("max")
+                  .url()}
+                alt={project.projectName}
+                className="w-full h-auto"
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 mt-12">
+          <div className="flex flex-col gap-8">
+            {project.role && (
+              <section>
+                <h2 className="text-2xl font-semibold">Role</h2>
+                {project.role.map((item) => (
+                  <div className="prose max-w-none">{item}</div>
+                ))}
+              </section>
             )}
-            {project.tags?.map((tag) => (
-              <span
-                key={tag}
-                className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
 
-        {project.outcomeImage?.[0] && (
-          <div className="mt-8 rounded-2xl overflow-hidden">
-            <img
-              src={urlFor(project.outcomeImage[0]).quality(90).fit("max").url()}
-              alt={project.projectName}
-              className="w-full h-auto"
-            />
+            {project.duration && (
+              <section>
+                <h2 className="text-2xl font-semibold">Duration</h2>
+                <div className="prose max-w-none">{project.duration}</div>
+              </section>
+            )}
           </div>
-        )}
+          {/* <div className="flex flex-col gap-2"> */}
+          {project.overview && (
+            <section>
+              <h2 className="text-2xl font-semibold">Overview</h2>
+              <div className="prose max-w-none mt-4">{project.overview}</div>
+            </section>
+          )}
+          {/* </div> */}
+        </div>
+        <div className="flex flex-col gap-8">
+          {project.outcome && (
+            <section>
+              <h2 className="text-2xl font-semibold">Outcome</h2>
+              <div className="prose max-w-none mt-4">{project.outcome}</div>
+            </section>
+          )}
+
+          {project.iframeContent && (
+            <section>
+              {" "}
+              <iframe
+                style={{
+                  border: "1px solid rgba(0, 0, 0, 0.1)",
+                  borderRadius: "12px",
+                }}
+                width="800"
+                height="450"
+                src={project.iframeContent}
+                allowFullScreen
+              ></iframe>
+            </section>
+          )}
+        </div>
 
         {/* Challenges */}
         {project.challengesContent && (
-          <section className="mt-12">
+          <section className="flex flex-col gap-8">
             <h2 className="text-2xl font-semibold">Challenges</h2>
-            <div className="prose max-w-none mt-4">
-              <PortableText
-                value={project.challengesContent as PortableTextBlock[]}
-              />
-            </div>
+            <div className="prose max-w-none">{project.challengesContent}</div>
             {project.challengesImage?.[0] && (
-              <div className="mt-6 rounded-2xl overflow-hidden">
+              <div className="rounded-2xl overflow-hidden">
                 <img
                   src={urlFor(project.challengesImage[0])
                     .quality(90)
@@ -118,15 +174,16 @@ export default function ProjectPage() {
 
         {/* Solution */}
         {project.solutionContent && (
-          <section className="mt-12">
+          <section className="flex flex-col gap-8">
             <h2 className="text-2xl font-semibold">Solution</h2>
-            <div className="prose max-w-none mt-4">
-              <PortableText
+            <div className="prose max-w-none">
+              {/* <PortableText
                 value={project.solutionContent as PortableTextBlock[]}
-              />
+              /> */}
+              {project.solutionContent}
             </div>
             {project.solutionImage?.[0] && (
-              <div className="mt-6 rounded-2xl overflow-hidden">
+              <div className="rounded-2xl overflow-hidden">
                 <img
                   src={urlFor(project.solutionImage[0])
                     .quality(90)
@@ -141,26 +198,31 @@ export default function ProjectPage() {
         )}
 
         {/* Read more */}
-        {project.readMore && (
-          <section className="mt-12">
-            <h2 className="text-2xl font-semibold">Read more</h2>
-            <div className="prose max-w-none mt-4">
-              <PortableText value={project.readMore as PortableTextBlock[]} />
-            </div>
-          </section>
-        )}
+        <div className="flex gap-4">
+          {project.readMore && (
+            <a
+              className="inline-flex mt-10 px-4 py-2 rounded-md bg-white border border-gray-800 text-gray-800 hover:bg-gray-800"
+              href={project.readMore}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Case Study
+            </a>
+          )}
 
-        {project.outcomeURL && (
-          <a
-            className="inline-flex mt-10 px-4 py-2 rounded-md bg-gray-900 text-white hover:bg-gray-800"
-            href={project.outcomeURL}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Visit project
-          </a>
-        )}
+          {project.outcomeURL && (
+            <a
+              className="inline-flex mt-10 px-4 py-2 rounded-md bg-gray-900 text-white hover:bg-gray-800"
+              href={project.outcomeURL}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Visit project
+            </a>
+          )}
+        </div>
       </div>
+      <Contact />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import type { PortableTextBlock } from "@portabletext/types";
+// import type { PortableTextBlock } from "@portabletext/types";
 
 export interface SanityProject {
   _id: string;
@@ -10,6 +10,10 @@ export interface SanityProject {
   duration: string;
   status: string;
   tags: string[];
+  iframeContent: string;
+  role: string[];
+  overview: string;
+  outcome: string;
   outcomeImage: Array<{
     asset: {
       _ref: string;
@@ -17,19 +21,19 @@ export interface SanityProject {
     alt?: string;
   }>;
   outcomeURL?: string;
-  challengesContent: PortableTextBlock[];
+  challengesContent: string;
   challengesImage?: Array<{
     asset: {
       _ref: string;
     };
     alt?: string;
   }>;
-  solutionContent: PortableTextBlock[];
+  solutionContent: string;
   solutionImage?: Array<{
     asset: {
       _ref: string;
     };
     alt?: string;
   }>;
-  readMore: PortableTextBlock[];
+  readMore: string;
 }

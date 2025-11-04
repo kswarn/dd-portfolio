@@ -117,7 +117,7 @@ const Work: React.FC = () => {
           </div>
 
           {/* Other Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
             {projects?.slice(1).map((project) => (
               <a
                 key={project._id}
