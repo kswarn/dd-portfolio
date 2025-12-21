@@ -73,9 +73,13 @@ const Work: React.FC = () => {
                     />
                   )}
                   <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute top-6 right-6 bg-white px-2 py-2 rounded-full">
-                    <span className="text-lg font-medium text-gray-900">
-                      <ArrowUpRight size={20} weight="bold" />
+                  <div className="absolute top-6 right-6 bg-[#ffbdbd] hover:bg-gray-800 px-2 py-2 rounded-full">
+                    <span className="text-lg font-medium text-gray-900 hover:text-[#fff]">
+                      <ArrowUpRight
+                        size={20}
+                        weight="bold"
+                        className="hover:text-[#fff]"
+                      />
                     </span>
                   </div>
                 </div>
@@ -136,9 +140,13 @@ const Work: React.FC = () => {
                     />
                   )}
                   <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute top-6 right-6 bg-white px-2 py-2 rounded-full">
-                    <span className="text-lg font-medium text-gray-900">
-                      <ArrowUpRight size={20} weight="bold" />
+                  <div className="absolute top-6 right-6 bg-[#ffbdbd] hover:bg-gray-800 hover:text-[#fff] px-2 py-2 rounded-full">
+                    <span className="text-lg font-medium">
+                      <ArrowUpRight
+                        size={20}
+                        weight="bold"
+                        className="hover:text-[#fff]"
+                      />
                     </span>
                   </div>
                 </div>

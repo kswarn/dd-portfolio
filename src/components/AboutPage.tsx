@@ -54,8 +54,11 @@ const AboutPage: React.FC = () => {
           {/* Text Content */}
           <div className="space-y-8">
             <h3 className="text-4xl font-medium text-gray-900 text-left md:text-center leading-14">
-              Austin-based Design Engineer building experiences that <br></br>
-              elevate the lives of people and accelerate business
+              Austin-based{" "}
+              <span className="underline decoration-wavy decoration-[#ffbdbd] underline-offset-12">
+                Design Engineer
+              </span>{" "}
+              building experiences <br></br> that transform people & business
             </h3>
           </div>
 
@@ -106,9 +109,8 @@ const AboutPage: React.FC = () => {
         <div className="w-full md:w-1/2 lg:w-1/2 flex flex-col gap-8">
           <p className="text-3xl font-medium leading-12">
             I’m currently a graduate student majoring in <br></br>{" "}
-            <span className="decorative-subtext">
-              Human Computer Interaction and UX{" "}
-            </span>{" "}
+            {/* <span className="decorative-subtext"> */}
+            Human Computer Interaction and UX {/* </span>{" "} */}
             at UT Austin
           </p>
           <div className="flex flex-col gap-4 font-medium text-lg">
@@ -146,7 +148,7 @@ const AboutPage: React.FC = () => {
             <p className="text-3xl font-semibold">Experience</p>
             <ul>
               {experience.map((item) => (
-                <li className="flex flex-col gap-2 my-8">
+                <li key={item.title} className="flex flex-col gap-2 my-8">
                   <p className="text-gray-700 text-md">{item.duration}</p>
                   <p className="text-xl font-medium">{item.title}</p>
                 </li>

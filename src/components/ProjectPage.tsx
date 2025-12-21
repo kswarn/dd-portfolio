@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 // import { PortableText } from "@portabletext/react";
 // import type { PortableTextBlock } from "@portabletext/types";
+import { ArrowRightIcon } from "@phosphor-icons/react";
+
 import type { SanityProject } from "../types/sanity";
-import { getProjectBySlug, urlFor } from "../lib/sanity";
+import { getProjectBySlug } from "../lib/sanity";
 import Header from "./Header";
 import Contact from "./Contact";
+import ImageGallery from "./ImageGallery";
 
 export default function ProjectPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -53,6 +56,33 @@ export default function ProjectPage() {
     );
   }
 
+  function formatContentToArray(content: string) {
+    const topLevelItems = content.split(";");
+
+    return (
+      <ul className="list-disc ml-6">
+        {topLevelItems.map((item, index) => {
+          const parts = item.includes("?");
+          const parents = !parts && item;
+          const children = parts ? [...item.split("?")] : [];
+          return parents ? (
+            <li className="my-1" key={index}>
+              {parents}
+            </li>
+          ) : (
+            <ul className="ml-4">
+              {children.map((child, childIndex) => (
+                <li key={childIndex} className="flex gap-2 my-2 items-start">
+                  <ArrowRightIcon width={12} className="mt-1" /> {child}
+                </li>
+              ))}
+            </ul>
+          );
+        })}
+      </ul>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -86,17 +116,11 @@ export default function ProjectPage() {
           )}
         </div>
         <div className="mt-4">
-          {project.outcomeImage?.[0] && (
-            <div className="rounded-2xl overflow-hidden">
-              <img
-                src={urlFor(project.outcomeImage[0])
-                  .quality(90)
-                  .fit("max")
-                  .url()}
-                alt={project.projectName}
-                className="w-full h-auto"
-              />
-            </div>
+          {project.outcomeImage && project.outcomeImage.length > 0 && (
+            <ImageGallery
+              images={project.outcomeImage}
+              altText={project.projectName}
+            />
           )}
         </div>
 
@@ -105,33 +129,55 @@ export default function ProjectPage() {
             {project.role && (
               <section>
                 <h2 className="text-2xl font-semibold">Role</h2>
-                {project.role.map((item) => (
-                  <div className="prose max-w-none">{item}</div>
-                ))}
+                <div className="mt-4">
+                  {project.role.map((item) => (
+                    <div className="prose max-w-none">{item}</div>
+                  ))}
+                </div>
               </section>
             )}
 
             {project.duration && (
               <section>
                 <h2 className="text-2xl font-semibold">Duration</h2>
-                <div className="prose max-w-none">{project.duration}</div>
+                <div className="prose max-w-none mt-4">{project.duration}</div>
+              </section>
+            )}
+            {project.teamSize && (
+              <section>
+                <h2 className="text-2xl font-semibold">Team Size</h2>
+                <div className="prose max-w-none mt-2">{project.teamSize}</div>
               </section>
             )}
           </div>
-          {/* <div className="flex flex-col gap-2"> */}
-          {project.overview && (
-            <section>
-              <h2 className="text-2xl font-semibold">Overview</h2>
-              <div className="prose max-w-none mt-4">{project.overview}</div>
-            </section>
-          )}
+          <div className="flex flex-col gap-8">
+            {project.overview && (
+              <section>
+                <h2 className="text-2xl font-semibold">Overview</h2>
+                <div className="prose max-w-none mt-4">{project.overview}</div>
+              </section>
+            )}
+          </div>
+
           {/* </div> */}
         </div>
         <div className="flex flex-col gap-8">
           {project.outcome && (
             <section>
               <h2 className="text-2xl font-semibold">Outcome</h2>
-              <div className="prose max-w-none mt-4">{project.outcome}</div>
+              <div className="prose max-w-none mt-2 flex flex-col gap-4">
+                {formatContentToArray(project.outcome)}
+                {project.outcomeURL && (
+                  <a
+                    className="inline-flex w-30 mt-4 font-semibold px-4 py-2 rounded-md bg-[#40764c] hover:text-[#ffbdbd] text-white"
+                    href={project.outcomeURL}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Visit project
+                  </a>
+                )}
+              </div>
             </section>
           )}
 
@@ -152,72 +198,81 @@ export default function ProjectPage() {
           )}
         </div>
 
-        {/* Challenges */}
-        {project.challengesContent && (
-          <section className="flex flex-col gap-8">
-            <h2 className="text-2xl font-semibold">Challenges</h2>
-            <div className="prose max-w-none">{project.challengesContent}</div>
-            {project.challengesImage?.[0] && (
-              <div className="rounded-2xl overflow-hidden">
-                <img
-                  src={urlFor(project.challengesImage[0])
-                    .quality(90)
-                    .fit("max")
-                    .url()}
-                  alt="Challenges"
-                  className="w-full h-auto"
-                />
+        {/* Problem Statement */}
+        <div className="flex flex-col gap-8">
+          {project.problemStatement && (
+            <section>
+              <h2 className="text-2xl font-semibold">Problem Statement</h2>
+              <div className="prose max-w-none mt-2 flex flex-col gap-4">
+                {project.problemStatement}
               </div>
-            )}
-          </section>
-        )}
+            </section>
+          )}
+        </div>
 
-        {/* Solution */}
-        {project.solutionContent && (
-          <section className="flex flex-col gap-8">
-            <h2 className="text-2xl font-semibold">Solution</h2>
-            <div className="prose max-w-none">
-              {/* <PortableText
+        {/* Ideation  */}
+        <div className="flex flex-col">
+          <h2 className="text-2xl font-semibold">Process</h2>
+          {project.ideation && project.ideation.length > 0 && (
+            <ImageGallery images={project.ideation} altText="Challenges" />
+          )}
+        </div>
+
+        {/* Challenges */}
+        <div className="flex flex-col gap-8">
+          {project.challengesContent && (
+            <section>
+              <h2 className="text-2xl font-semibold">Challenges</h2>
+              <div className="prose max-w-none mt-2 flex flex-col gap-4">
+                {formatContentToArray(project.challengesContent)}
+              </div>
+              {project.challengesImage &&
+                project.challengesImage.length > 0 && (
+                  <ImageGallery
+                    images={project.challengesImage}
+                    altText="Challenges"
+                  />
+                )}
+            </section>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-20">
+          {/* Solution */}
+          {project.solutionContent && (
+            <>
+              <section className="">
+                <h2 className="text-2xl font-semibold">Solution</h2>
+                <div className="prose max-w-none mt-2">
+                  {/* <PortableText
                 value={project.solutionContent as PortableTextBlock[]}
               /> */}
-              {project.solutionContent}
-            </div>
-            {project.solutionImage?.[0] && (
-              <div className="rounded-2xl overflow-hidden">
-                <img
-                  src={urlFor(project.solutionImage[0])
-                    .quality(90)
-                    .fit("max")
-                    .url()}
-                  alt="Solution"
-                  className="w-full h-auto"
-                />
+
+                  {formatContentToArray(project.solutionContent)}
+                </div>
+              </section>
+              <div className="">
+                {project.solutionImage && project.solutionImage.length > 0 && (
+                  <ImageGallery
+                    images={project.solutionImage}
+                    altText="Solution"
+                  />
+                )}
               </div>
-            )}
-          </section>
-        )}
+            </>
+          )}
+        </div>
 
         {/* Read more */}
         <div className="flex gap-4">
           {project.readMore && (
             <a
-              className="inline-flex mt-10 px-4 py-2 rounded-md bg-white border border-gray-800 text-gray-800 hover:bg-gray-800"
+              className="mt-10 px-4 py-2 font-medium rounded-md bg-gray-800 text-white hover:text-[#ffbdbd]"
               href={project.readMore}
               target="_blank"
               rel="noreferrer"
             >
               Case Study
-            </a>
-          )}
-
-          {project.outcomeURL && (
-            <a
-              className="inline-flex mt-10 px-4 py-2 rounded-md bg-gray-900 text-white hover:bg-gray-800"
-              href={project.outcomeURL}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Visit project
             </a>
           )}
         </div>

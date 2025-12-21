@@ -59,8 +59,8 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
           </div>
 
           <nav className="flex flex-col h-1/2 md:h-full lg:h-full justify-between">
-            <div className="flex flex-col gap-4">
-              <div>
+            {/* <div className="flex flex-col gap-4"> */}
+            {/* <div>
                 <a
                   href="#about"
                   onClick={onClose}
@@ -68,9 +68,9 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                 >
                   About Me
                 </a>
-              </div>
+              </div> */}
 
-              {/* <div>
+            {/* <div>
               <a
                 href="#blog"
                 onClick={onClose}
@@ -80,7 +80,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
               </a>
             </div> */}
 
-              <div>
+            {/* <div>
                 <a
                   href="#contact"
                   onClick={onClose}
@@ -88,11 +88,13 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                 >
                   Get in touch
                 </a>
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
 
             <div>
-              <div className="text-lg font-medium text-gray-900">Work</div>
+              <div className="text-lg font-semibold text-[#40764c]">
+                My Work
+              </div>
               {/* sub list */}
               <ul className="mt-3 flex flex-col gap-4">
                 {projects.map((p) => (
@@ -109,7 +111,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
               </ul>
             </div>
             <div>
-              <div className="text-lg font-medium text-gray-700">Follow</div>
+              <div className="text-lg font-semibold text-[#40764c]">Follow</div>
               {/* sub list */}
               <ul className="mt-3 flex items-center gap-4">
                 {socialLinks.map((link) => (

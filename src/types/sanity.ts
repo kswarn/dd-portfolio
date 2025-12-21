@@ -8,6 +8,7 @@ export interface SanityProject {
   projectName: string;
   projectSubtitle: string;
   duration: string;
+  teamSize: string;
   status: string;
   tags: string[];
   iframeContent: string;
@@ -21,6 +22,13 @@ export interface SanityProject {
     alt?: string;
   }>;
   outcomeURL?: string;
+  problemStatement?:string;
+  ideation?:Array<{
+    asset: {
+      _ref: string;
+    };
+    alt?: string;
+  }>;
   challengesContent: string;
   challengesImage?: Array<{
     asset: {

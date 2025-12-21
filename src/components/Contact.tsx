@@ -10,12 +10,12 @@ const Contact: React.FC = () => {
             <h3 className="text-3xl font-medium text-gray-900">
               Questions about my work?
             </h3>
-            <h3 className="text-3xl font-medium">
+            <h3 className="text-xl font-medium">
               <a
                 href="mailto:contact@swarna.design"
-                className="text-[#1e8fd6] hover:text-[#1e8fd6] transition-colors"
+                className="text-gray-800 bg-[#ffbdbd] text-lg hover:text-[#40764c] px-4 py-2 rounded-full transition-colors"
               >
-                Let's chat.
+                Let's chat
               </a>
             </h3>
           </div>

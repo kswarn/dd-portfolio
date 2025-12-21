@@ -7,17 +7,20 @@ const Hero: React.FC = () => {
         <div className="text-center sm:mb-8 md:mb-16 lg:mb-16">
           <p className="text-[36px] md:text-[42px] text-left md:text-center lg:text-center lg:text-[42px] font-medium text-gray-900 mb-8">
             I'm a{" "}
-            <span className="decorative-hero-text rotating">
+            <span className="decorative-hero-text rotating text-[#40764c]">
               design engineer{" "}
             </span>{" "}
-            determined to build products that <br></br> understand{" "}
-            <span className="decorative-subtext">human behaviour</span>
+            crafting{" "}
+            <span className="decorative-subtext">
+              user-centered and intuitive{" "}
+            </span>{" "}
+            experiences in software
           </p>
         </div>
 
         <div className="flex flex-col md:flex-row gap-8 md:gap-24 lg:gap-24 items-start justify-center md:items-center lg:items-center">
           <div className="flex items-center gap-4">
-            <div className="bg-[#ffbdbd] rounded-full p-2 w-10 h-10 flex items-center justify-center">
+            <div className="bg-[#ffbdbd] rounded-full p-2 w-10 h-10 flex items-center justify-center ">
               <StudentIcon size={30} weight="bold" />
             </div>
             <h6 className="text-xl font-medium text-gray-900">

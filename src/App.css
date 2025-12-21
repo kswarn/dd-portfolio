@@ -71,8 +71,11 @@ img {
 
 
 .decorative-subtext {
+  /* display: inline-block; */
   background-image: url('/images/Frame 5.png');
-  background-size: 320px 50px;
+  /* background-size: 320px 50px; */
+  background-repeat: repeat-x;   
+  background-size: auto 100%; 
 }
 
 /* Responsive adjustments */
@@ -87,4 +90,8 @@ img {
     padding-bottom: 2rem;
   }
 
+}
+
+.custom-font {
+  font-family: 'Cedarville Cursive', cursive;
 }
