@@ -36,7 +36,7 @@ const Contact: React.FC = () => {
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-lg text-gray-900 hover:text-blue-600 transition-colors"
+                className="text-md md:text-xl text-gray-900 hover:text-blue-600 transition-colors"
               >
                 {link.name}
               </a>

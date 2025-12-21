@@ -59,7 +59,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
           </div>
 
           <nav className="flex flex-col gap-8 h-1/2 md:h-full lg:h-full justify-between">
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-4">
               <div>
                 <a
                   href="/about"
