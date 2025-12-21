@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-// import { PortableText } from "@portabletext/react";
-// import type { PortableTextBlock } from "@portabletext/types";
 import { ArrowRightIcon, InfoIcon } from "@phosphor-icons/react";
 
 import type { SanityProject } from "../types/sanity";
@@ -73,7 +71,8 @@ export default function ProjectPage() {
             <ul className="ml-4">
               {children.map((child, childIndex) => (
                 <li key={childIndex} className="flex gap-2 my-2 items-start">
-                  <ArrowRightIcon width={12} className="mt-1" /> {child}
+                  <ArrowRightIcon size={14} className="mt-1 flex-shrink-0" />
+                  <span>{child}</span>
                 </li>
               ))}
             </ul>

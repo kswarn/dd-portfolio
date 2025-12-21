@@ -58,38 +58,39 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
             </button>
           </div>
 
-          <nav className="flex flex-col h-1/2 md:h-full lg:h-full justify-between">
-            {/* <div className="flex flex-col gap-4"> */}
-            {/* <div>
+          <nav className="flex flex-col gap-8 h-1/2 md:h-full lg:h-full justify-between">
+            <div className="flex flex-col gap-2">
+              <div>
                 <a
-                  href="#about"
+                  href="/about"
                   onClick={onClose}
-                  className="text-2xl font-medium text-gray-900 hover:underline"
+                  className="text-xl font-medium text-gray-900 hover:underline"
                 >
-                  About Me
+                  About me
                 </a>
-              </div> */}
+              </div>
 
-            {/* <div>
-              <a
-                href="#blog"
-                onClick={onClose}
-                className="text-xl font-medium text-gray-900 hover:underline"
-              >
-                Blog
-              </a>
-            </div> */}
-
-            {/* <div>
+              <div>
                 <a
-                  href="#contact"
+                  href="https://drive.google.com/file/d/19t2Ydk-noAOPMKNtOpbmKnReZN1EzG4A/view?usp=sharing"
+                  target="_blank"
                   onClick={onClose}
-                  className="text-2xl font-medium text-gray-900 hover:underline"
+                  className="text-xl font-medium text-gray-900 hover:underline"
+                >
+                  Resume
+                </a>
+              </div>
+
+              <div>
+                <a
+                  href="mailto:contact@swarna.design"
+                  onClick={onClose}
+                  className="text-xl font-medium text-gray-900 hover:underline"
                 >
                   Get in touch
                 </a>
-              </div> */}
-            {/* </div> */}
+              </div>
+            </div>
 
             <div>
               <div className="text-lg font-semibold text-[#40764c]">
