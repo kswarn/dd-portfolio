@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 // import { PortableText } from "@portabletext/react";
 // import type { PortableTextBlock } from "@portabletext/types";
-import { ArrowRightIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon, InfoIcon } from "@phosphor-icons/react";
 
 import type { SanityProject } from "../types/sanity";
 import { getProjectBySlug } from "../lib/sanity";
@@ -124,6 +124,13 @@ export default function ProjectPage() {
           )}
         </div>
 
+        <div className="bg-gray-100 px-4 py-2 mt-4 flex gap-2 items-center rounded-md text-red-800">
+          <InfoIcon size={20} />
+          <span>
+            Case study still in progress. Thank you for your patience.
+          </span>
+        </div>
+
         <div className="grid grid-cols-2 gap-4 mt-12">
           <div className="flex flex-col gap-8">
             {project.role && (
@@ -211,12 +218,14 @@ export default function ProjectPage() {
         </div>
 
         {/* Ideation  */}
-        <div className="flex flex-col">
-          <h2 className="text-2xl font-semibold">Process</h2>
-          {project.ideation && project.ideation.length > 0 && (
-            <ImageGallery images={project.ideation} altText="Challenges" />
-          )}
-        </div>
+        {project.ideation && (
+          <div className="flex flex-col">
+            <h2 className="text-2xl font-semibold">Process</h2>
+            {project.ideation && project.ideation.length > 0 && (
+              <ImageGallery images={project.ideation} altText="Challenges" />
+            )}
+          </div>
+        )}
 
         {/* Challenges */}
         <div className="flex flex-col gap-8">
