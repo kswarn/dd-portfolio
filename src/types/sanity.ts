@@ -29,7 +29,9 @@ export interface SanityProject {
     };
     alt?: string;
   }>;
+  usageResearch?:string;
   challengesContent: string;
+  usabilityTesting?:string;
   challengesImage?: Array<{
     asset: {
       _ref: string;

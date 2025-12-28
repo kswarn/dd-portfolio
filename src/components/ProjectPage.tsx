@@ -123,7 +123,7 @@ export default function ProjectPage() {
           )}
         </div>
 
-        <div className="bg-gray-100 px-4 py-2 mt-4 flex gap-2 items-center rounded-md text-red-800">
+        <div className="bg-gray-100 px-4 py-2 mt-4 flex gap-2 items-start md:items-center rounded-md text-red-800">
           <InfoIcon size={20} />
           <span>
             Case study still in progress. Thank you for your patience.
@@ -188,18 +188,21 @@ export default function ProjectPage() {
           )}
 
           {project.iframeContent && (
-            <section>
-              {" "}
-              <iframe
-                style={{
-                  border: "1px solid rgba(0, 0, 0, 0.1)",
-                  borderRadius: "12px",
-                }}
-                width="800"
-                height="450"
-                src={project.iframeContent}
-                allowFullScreen
-              ></iframe>
+            <section className="w-full overflow-hidden">
+              <div
+                className="relative w-full"
+                style={{ paddingBottom: "56.25%" }}
+              >
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full border border-gray-200 rounded-xl"
+                  src={project.iframeContent}
+                  allowFullScreen
+                  style={{
+                    border: "1px solid rgba(0, 0, 0, 0.1)",
+                    borderRadius: "12px",
+                  }}
+                ></iframe>
+              </div>
             </section>
           )}
         </div>
@@ -245,6 +248,25 @@ export default function ProjectPage() {
           )}
         </div>
 
+        {/* Usage Research */}
+        <div className="flex flex-col gap-8">
+          {project.usageResearch && (
+            <section>
+              <h2 className="text-2xl font-semibold">Usage Research</h2>
+              <div className="prose max-w-none mt-2 flex flex-col gap-4">
+                {formatContentToArray(project.usageResearch)}
+              </div>
+              {/* {project.challengesImage &&
+                project.challengesImage.length > 0 && (
+                  <ImageGallery
+                    images={project.challengesImage}
+                    altText="Challenges"
+                  />
+                )} */}
+            </section>
+          )}
+        </div>
+
         <div className="flex flex-col gap-20">
           {/* Solution */}
           {project.solutionContent && (
@@ -268,6 +290,25 @@ export default function ProjectPage() {
                 )}
               </div>
             </>
+          )}
+        </div>
+
+        {/* Usability Testing */}
+        <div className="flex flex-col gap-8">
+          {project.usabilityTesting && (
+            <section>
+              <h2 className="text-2xl font-semibold">Testing</h2>
+              <div className="prose max-w-none mt-2 flex flex-col gap-4">
+                {formatContentToArray(project.usabilityTesting)}
+              </div>
+              {/* {project.challengesImage &&
+                project.challengesImage.length > 0 && (
+                  <ImageGallery
+                    images={project.challengesImage}
+                    altText="Challenges"
+                  />
+                )} */}
+            </section>
           )}
         </div>
 

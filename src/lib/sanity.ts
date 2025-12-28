@@ -58,6 +58,8 @@ export async function getProjectBySlug(slug: string): Promise<SanityProject | nu
     teamSize,
     problemStatement,
     ideation,
+    usageResearch,
+    usabilityTesting,
   }`;
   try {
     const project = await client.fetch(query, { slug });
