@@ -10,11 +10,8 @@ const Hero: React.FC = () => {
             <span className="decorative-hero-text rotating text-[#40764c]">
               design engineer{" "}
             </span>{" "}
-            crafting{" "}
-            <span className="decorative-subtext">
-              user-centered and intuitive{" "}
-            </span>{" "}
-            experiences in software
+            crafting <span>user-centered and intuitive </span> experiences in
+            software
           </p>
         </div>
 
