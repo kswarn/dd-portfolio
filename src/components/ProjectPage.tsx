@@ -1,18 +1,112 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowRightIcon, InfoIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon, ArrowUpRight } from "@phosphor-icons/react";
 
 import type { SanityProject } from "../types/sanity";
-import { getProjectBySlug } from "../lib/sanity";
+import { getProjectBySlug, getProjects, urlFor } from "../lib/sanity";
 import Header from "./Header";
 import Contact from "./Contact";
 import ImageGallery from "./ImageGallery";
+
+interface ResponsiveIframeProps {
+  src: string;
+}
+
+function ResponsiveIframe({ src }: ResponsiveIframeProps) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [iframeHeight, setIframeHeight] = useState<number | null>(null);
+
+  useEffect(() => {
+    const iframe = iframeRef.current;
+    if (!iframe) return;
+
+    const attemptResize = () => {
+      try {
+        // Try to access iframe content (may fail due to CORS)
+        const iframeDocument =
+          iframe.contentDocument || iframe.contentWindow?.document;
+        if (iframeDocument) {
+          const body = iframeDocument.body;
+          const html = iframeDocument.documentElement;
+          const height = Math.max(
+            body?.scrollHeight || 0,
+            body?.offsetHeight || 0,
+            html?.clientHeight || 0,
+            html?.scrollHeight || 0,
+            html?.offsetHeight || 0
+          );
+          if (height > 0) {
+            setIframeHeight(height);
+          }
+        }
+      } catch {
+        // CORS error - can't access iframe content
+        // Fall back to default height or postMessage
+        // This is expected for cross-origin iframes
+      }
+    };
+
+    // Listen for postMessage from iframe (if it supports it)
+    const handleMessage = (event: MessageEvent) => {
+      // Verify origin if needed
+      if (
+        event.data &&
+        typeof event.data === "object" &&
+        event.data.type === "iframe-resize"
+      ) {
+        setIframeHeight(event.data.height);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    // Try to resize when iframe loads
+    iframe.addEventListener("load", () => {
+      // Wait a bit for content to render
+      setTimeout(attemptResize, 500);
+      // Try again after a longer delay
+      setTimeout(attemptResize, 2000);
+    });
+
+    // Initial attempt
+    attemptResize();
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [src]);
+
+  // Default to a reasonable height if we can't determine content height
+  const height = iframeHeight || 600;
+
+  return (
+    <section className="w-full overflow-hidden">
+      <div ref={containerRef} className="relative w-full">
+        <iframe
+          ref={iframeRef}
+          src={src}
+          className="w-full border border-gray-200 rounded-xl"
+          allowFullScreen
+          scrolling="no"
+          style={{
+            border: "1px solid rgba(0, 0, 0, 0.1)",
+            borderRadius: "12px",
+            height: `${height}px`,
+            minHeight: "400px",
+          }}
+        ></iframe>
+      </div>
+    </section>
+  );
+}
 
 export default function ProjectPage() {
   const { slug } = useParams<{ slug: string }>();
   const [project, setProject] = useState<SanityProject | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [nextProjects, setNextProjects] = useState<SanityProject[]>([]);
 
   console.log(project);
 
@@ -22,6 +116,16 @@ export default function ProjectPage() {
       try {
         const data = await getProjectBySlug(slug);
         setProject(data);
+
+        // Fetch all projects and get 2 random ones (excluding current)
+        const allProjects = await getProjects();
+        const otherProjects = allProjects.filter(
+          (p) => p.slug?.current !== slug
+        );
+
+        // Shuffle and pick 2 random projects
+        const shuffled = [...otherProjects].sort(() => Math.random() - 0.5);
+        setNextProjects(shuffled.slice(0, 2));
       } catch {
         setError("Failed to load project");
       } finally {
@@ -85,7 +189,7 @@ export default function ProjectPage() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      <div className="pt-28 pb-16 px-8 md:px-12 flex flex-col gap-12 lg:px-16 max-w-5xl mx-auto">
+      <div className="pt-28 px-8 md:px-12 flex flex-col gap-12 lg:px-16 max-w-5xl mx-auto">
         <div className="flex flex-col gap-6">
           <h1 className="text-3xl md:text-5xl font-semibold text-gray-900">
             {project.projectName}
@@ -123,12 +227,12 @@ export default function ProjectPage() {
           )}
         </div>
 
-        <div className="bg-gray-100 px-4 py-2 mt-4 flex gap-2 items-start md:items-center rounded-md text-red-800">
+        {/* <div className="bg-gray-100 px-4 py-2 mt-4 flex gap-2 items-start md:items-center rounded-md text-red-800">
           <InfoIcon size={20} />
           <span>
             Case study still in progress. Thank you for your patience.
           </span>
-        </div>
+        </div> */}
 
         <div className="grid grid-cols-2 gap-4 mt-12">
           <div className="flex flex-col gap-8">
@@ -149,10 +253,10 @@ export default function ProjectPage() {
                 <div className="prose max-w-none mt-4">{project.duration}</div>
               </section>
             )}
-            {project.teamSize && (
+            {project.team && (
               <section>
-                <h2 className="text-2xl font-semibold">Team Size</h2>
-                <div className="prose max-w-none mt-2">{project.teamSize}</div>
+                <h2 className="text-2xl font-semibold">Team</h2>
+                <div className="prose max-w-none mt-2">{project.team}</div>
               </section>
             )}
           </div>
@@ -188,22 +292,7 @@ export default function ProjectPage() {
           )}
 
           {project.iframeContent && (
-            <section className="w-full overflow-hidden">
-              <div
-                className="relative w-full"
-                style={{ paddingBottom: "56.25%" }}
-              >
-                <iframe
-                  className="absolute top-0 left-0 w-full h-full border border-gray-200 rounded-xl"
-                  src={project.iframeContent}
-                  allowFullScreen
-                  style={{
-                    border: "1px solid rgba(0, 0, 0, 0.1)",
-                    borderRadius: "12px",
-                  }}
-                ></iframe>
-              </div>
-            </section>
+            <ResponsiveIframe src={project.iframeContent} />
           )}
         </div>
 
@@ -232,7 +321,7 @@ export default function ProjectPage() {
         {/* Challenges */}
         <div className="flex flex-col gap-8">
           {project.challengesContent && (
-            <section>
+            <section className="flex flex-col gap-4">
               <h2 className="text-2xl font-semibold">Challenges</h2>
               <div className="prose max-w-none mt-2 flex flex-col gap-4">
                 {formatContentToArray(project.challengesContent)}
@@ -251,23 +340,25 @@ export default function ProjectPage() {
         {/* Usage Research */}
         <div className="flex flex-col gap-8">
           {project.usageResearch && (
-            <section>
+            <section className="flex flex-col gap-4">
               <h2 className="text-2xl font-semibold">Usage Research</h2>
               <div className="prose max-w-none mt-2 flex flex-col gap-4">
                 {formatContentToArray(project.usageResearch)}
               </div>
-              {/* {project.challengesImage &&
-                project.challengesImage.length > 0 && (
-                  <ImageGallery
-                    images={project.challengesImage}
-                    altText="Challenges"
-                  />
-                )} */}
+              <div>
+                {project.usageResearchImage &&
+                  project.usageResearchImage.length > 0 && (
+                    <ImageGallery
+                      images={project.usageResearchImage}
+                      altText="Usage Research"
+                    />
+                  )}
+              </div>
             </section>
           )}
         </div>
 
-        <div className="flex flex-col gap-20">
+        <div className="flex flex-col gap-10">
           {/* Solution */}
           {project.solutionContent && (
             <>
@@ -316,7 +407,7 @@ export default function ProjectPage() {
         <div className="flex gap-4">
           {project.readMore && (
             <a
-              className="mt-10 px-4 py-2 font-medium rounded-md bg-gray-800 text-white hover:text-[#ffbdbd]"
+              className="px-4 py-2 font-medium rounded-md bg-gray-800 text-white hover:text-[#ffbdbd]"
               href={project.readMore}
               target="_blank"
               rel="noreferrer"
@@ -325,6 +416,62 @@ export default function ProjectPage() {
             </a>
           )}
         </div>
+
+        {/* Next Projects */}
+        {nextProjects.length > 0 && (
+          <section className="mt-20">
+            <p className="text-2xl font-semibold text-gray-900 mb-12">
+              Read More
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {nextProjects.map((nextProject) => (
+                <Link
+                  key={nextProject._id}
+                  to={`/projects/${nextProject.slug?.current}`}
+                  className="block group"
+                >
+                  <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden">
+                    {nextProject.outcomeImage?.[0] && (
+                      <img
+                        src={urlFor(nextProject.outcomeImage[0])
+                          .quality(80)
+                          .fit("max")
+                          .url()}
+                        alt={nextProject.projectName}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute top-4 right-4 bg-[#ffbdbd] hover:bg-gray-800 p-2 rounded-full transition-colors">
+                      <ArrowUpRight
+                        size={20}
+                        weight="bold"
+                        className="text-gray-900 hover:text-white transition-colors"
+                      />
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <h3 className="text-xl md:text-2xl font-semibold text-gray-900">
+                      {nextProject.projectName}
+                    </h3>
+                    {nextProject.tags && nextProject.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {nextProject.tags.slice(0, 3).map((tag, index) => (
+                          <span
+                            key={index}
+                            className="text-sm px-3 py-1 rounded-full bg-gray-100 text-gray-700"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
       <Contact />
     </div>

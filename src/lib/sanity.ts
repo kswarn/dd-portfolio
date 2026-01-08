@@ -55,11 +55,12 @@ export async function getProjectBySlug(slug: string): Promise<SanityProject | nu
     solutionContent,
     solutionImage[]{asset, alt},
     readMore,
-    teamSize,
+    team,
     problemStatement,
     ideation,
     usageResearch,
     usabilityTesting,
+    usageResearchImage,
   }`;
   try {
     const project = await client.fetch(query, { slug });

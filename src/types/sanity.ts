@@ -8,7 +8,7 @@ export interface SanityProject {
   projectName: string;
   projectSubtitle: string;
   duration: string;
-  teamSize: string;
+  team: string;
   status: string;
   tags: string[];
   iframeContent: string;
@@ -33,6 +33,12 @@ export interface SanityProject {
   challengesContent: string;
   usabilityTesting?:string;
   challengesImage?: Array<{
+    asset: {
+      _ref: string;
+    };
+    alt?: string;
+  }>;
+  usageResearchImage?: Array<{
     asset: {
       _ref: string;
     };

@@ -54,11 +54,8 @@ const AboutPage: React.FC = () => {
           {/* Text Content */}
           <div className="space-y-8">
             <h3 className="text-4xl font-medium text-gray-900 text-left md:text-center leading-14">
-              Austin-based{" "}
-              <span className="underline decoration-wavy decoration-[#ffbdbd] underline-offset-12">
-                Design Engineer
-              </span>{" "}
-              building experiences <br></br> that transform people & business
+              Austin-based <span>Design Engineer</span> building experiences{" "}
+              <br></br> that transform people & business
             </h3>
           </div>
 
