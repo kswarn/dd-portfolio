@@ -204,7 +204,7 @@ const AboutPage: React.FC = () => {
             <p className="text-3xl font-semibold mb-12">Writing</p>
             <div className="overflow-hidden w-full">
               <div
-                className="flex items-stretch transition-transform duration-300 ease-out"
+                className="flex items-stretch transition-transform duration-300 ease-out pb-4"
                 style={{
                   width: `${writings.length * (100 / cardsPerView)}%`,
                   transform: `translateX(-${writingIndex * (100 / writings.length)}%)`,
@@ -219,12 +219,12 @@ const AboutPage: React.FC = () => {
                     className="flex-shrink-0  group block text-left pr-8 h-full"
                     style={{ width: `${100 / writings.length}%` }}
                   >
-                    <div className="border border-gray-200 rounded-2xl p-6 md:p-8 hover:border-[#ffbdbd] transition-colors h-full flex flex-col min-h-[280px]">
-                      <h4 className="text-xl font-semibold text-gray-900 mb-3">
+                    <div className="border border-[#40764c] rounded-2xl p-6 md:p-8 hover:translate-y-0.5 transition-transform duration-300 h-full flex flex-col min-h-[300px]">
+                      <h4 className="text-xl font-semibold text-[#40764c] mb-3">
                         {item.title}
                       </h4>
 
-                      <p className="text-gray-600 text-md mb-4 flex-1 min-h-0">
+                      <p className="text-gray-500 text-md mb-4 flex-1 min-h-0">
                         {item.blurb}
                       </p>
                       <div className="flex justify-between items-center">
@@ -234,10 +234,11 @@ const AboutPage: React.FC = () => {
                           </span>
                           <span className="text-gray-700">{item.medium}</span>
                         </div>
-                        <span className="border hover:translate-x-1 transition-transform duration-300 border-gray-200 rounded-lg p-2 text-gray-700 group-hover:text-gray-900">
+                        <span className="hover:translate-x-1 border border-[#40764c] transition-transform duration-300 rounded-lg p-2 text-gray-700 group-hover:text-gray-900">
                           <ArrowUpRight
                             size={14}
                             weight="bold"
+                            color="#40764c"
                             className="flex-shrink-0"
                           />
                         </span>
