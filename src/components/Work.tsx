@@ -53,140 +53,68 @@ const Work: React.FC = () => {
   return (
     <section className="py-16 px-16">
       <div className="mx-auto">
-        <div className="space-y-16">
-          {/* Featured Project */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="lg:col-span-2">
-              <a
-                href={`/projects/${projects[0]?.slug.current}`}
-                className="block group"
-              >
-                <div className="relative w-full aspect-[4/3] lg:aspect-[3/2] rounded-3xl overflow-hidden">
-                  {projects[0]?.outcomeImage?.[0]?.asset?._ref && (
-                    <img
-                      src={urlFor(projects[0].outcomeImage[0])
-                        .quality(80)
-                        .fit("max")
-                        .url()}
-                      alt={projects[0]?.projectName}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 justify-items-start">
+          {projects.map((project) => (
+            <a
+              key={project._id}
+              href={`/projects/${project.slug.current}`}
+              className="block group w-full"
+            >
+              <div className="relative w-full aspect-square rounded-3xl overflow-hidden">
+                {project.outcomeImage?.[0]?.asset?._ref && (
+                  <img
+                    src={urlFor(project.outcomeImage[0])
+                      .quality(80)
+                      .fit("max")
+                      .url()}
+                    alt={project.projectName}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                )}
+                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute top-6 right-6 bg-[#ffbdbd] hover:bg-gray-800 hover:text-[#fff] px-2 py-2 rounded-full">
+                  <span className="text-lg font-medium">
+                    <ArrowUpRight
+                      size={20}
+                      weight="bold"
+                      className="hover:text-[#fff]"
                     />
-                  )}
-                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute top-6 right-6 bg-[#ffbdbd] hover:bg-gray-800 px-2 py-2 rounded-full">
-                    <span className="text-lg font-medium text-gray-900 hover:text-[#fff]">
-                      <ArrowUpRight
-                        size={20}
-                        weight="bold"
-                        className="hover:text-[#fff]"
-                      />
-                    </span>
-                  </div>
+                  </span>
                 </div>
-                {/* Project name */}
-                {projects[0]?.projectName && (
-                  <div className="mt-4">
-                    <h3 className="text-xl md:text-2xl font-semibold text-gray-900">
-                      {projects[0].projectName}
-                    </h3>
-                  </div>
-                )}
-                {projects[0]?.projectSubtitle && (
-                  <div className="mt-4 text-md text-gray-600">
-                    {projects[0].projectSubtitle}
-                  </div>
-                )}
-                {(projects[0]?.status ||
-                  (Array.isArray(projects[0]?.tags) &&
-                    projects[0]?.tags.length > 0)) && (
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {projects[0]?.status && (
-                      <span className="text-sm px-4 py-2 rounded-full bg-gray-900 text-white">
-                        {projects[0]?.status}
-                      </span>
-                    )}
-                    {Array.isArray(projects[0]?.tags) &&
-                      projects[0]?.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-sm px-4 py-2 rounded-full bg-gray-100 text-gray-700"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                  </div>
-                )}
-              </a>
-            </div>
-          </div>
-
-          {/* Other Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
-            {projects?.slice(1).map((project) => (
-              <a
-                key={project._id}
-                href={`/projects/${project.slug.current}`}
-                className="block group"
-              >
-                <div className="relative w-full aspect-square rounded-3xl overflow-hidden">
-                  {project.outcomeImage?.[0]?.asset?._ref && (
-                    <img
-                      src={urlFor(project.outcomeImage[0])
-                        .quality(80)
-                        .fit("max")
-                        .url()}
-                      alt={project.projectName}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute top-6 right-6 bg-[#ffbdbd] hover:bg-gray-800 hover:text-[#fff] px-2 py-2 rounded-full">
-                    <span className="text-lg font-medium">
-                      <ArrowUpRight
-                        size={20}
-                        weight="bold"
-                        className="hover:text-[#fff]"
-                      />
-                    </span>
-                  </div>
+              </div>
+              {project.projectName && (
+                <div className="mt-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-gray-900">
+                    {project.projectName}
+                  </h3>
                 </div>
-                {/* Project name */}
-                {project.projectName && (
-                  <div className="mt-4">
-                    <h3 className="text-lg md:text-xl font-semibold text-gray-900">
-                      {project.projectName}
-                    </h3>
-                  </div>
-                )}
-                {/* Subtitle */}
-                {project.projectSubtitle && (
-                  <div className="mt-4 text-md text-gray-600">
-                    {project.projectSubtitle}
-                  </div>
-                )}
-                {/* Chips: status (first) + tags */}
-                {(project.status ||
-                  (Array.isArray(project.tags) && project.tags.length > 0)) && (
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {project.status && (
-                      <span className="text-sm px-4 py-2 rounded-full bg-[#ffbdbd] text-gray-900">
-                        {project.status}
+              )}
+              {project.projectSubtitle && (
+                <div className="mt-4 text-md text-gray-600">
+                  {project.projectSubtitle}
+                </div>
+              )}
+              {(project.status ||
+                (Array.isArray(project.tags) && project.tags.length > 0)) && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {project.status && (
+                    <span className="text-sm px-4 py-2 rounded-full bg-[#ffbdbd] text-gray-900">
+                      {project.status}
+                    </span>
+                  )}
+                  {Array.isArray(project.tags) &&
+                    project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-sm px-4 py-2 rounded-full bg-gray-100 text-gray-700"
+                      >
+                        {tag}
                       </span>
-                    )}
-                    {Array.isArray(project.tags) &&
-                      project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-sm px-4 py-2 rounded-full bg-gray-100 text-gray-700"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                  </div>
-                )}
-              </a>
-            ))}
-          </div>
+                    ))}
+                </div>
+              )}
+            </a>
+          ))}
         </div>
       </div>
     </section>
