@@ -201,29 +201,7 @@ const AboutPage: React.FC = () => {
             </ul>
           </div> */}
           <div className="md:col-span-2">
-            <div className="flex items-center justify-between gap-4 mb-8">
-              <p className="text-3xl font-semibold">Writing</p>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={goToPrev}
-                  disabled={!canGoPrev}
-                  className="p-2 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-                  aria-label="Previous"
-                >
-                  <CaretLeft size={16} weight="bold" />
-                </button>
-                <button
-                  type="button"
-                  onClick={goToNext}
-                  disabled={!canGoNext}
-                  className="p-2 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-                  aria-label="Next"
-                >
-                  <CaretRight size={16} weight="bold" />
-                </button>
-              </div>
-            </div>
+            <p className="text-3xl font-semibold mb-12">Writing</p>
             <div className="overflow-hidden w-full">
               <div
                 className="flex items-stretch transition-transform duration-300 ease-out"
@@ -238,10 +216,10 @@ const AboutPage: React.FC = () => {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-shrink-0 group block text-left pr-8 h-full"
+                    className="flex-shrink-0  group block text-left pr-8 h-full"
                     style={{ width: `${100 / writings.length}%` }}
                   >
-                    <div className="border border-gray-200 rounded-2xl p-6 md:p-8 hover:border-gray-300 transition-colors h-full flex flex-col min-h-[280px]">
+                    <div className="border border-gray-200 rounded-2xl p-6 md:p-8 hover:border-[#ffbdbd] transition-colors h-full flex flex-col min-h-[280px]">
                       <h4 className="text-xl font-semibold text-gray-900 mb-3">
                         {item.title}
                       </h4>
@@ -256,7 +234,7 @@ const AboutPage: React.FC = () => {
                           </span>
                           <span className="text-gray-700">{item.medium}</span>
                         </div>
-                        <span className="border border-gray-200 rounded-lg p-2 text-gray-700 group-hover:text-gray-900">
+                        <span className="border hover:translate-x-1 transition-transform duration-300 border-gray-200 rounded-lg p-2 text-gray-700 group-hover:text-gray-900">
                           <ArrowUpRight
                             size={14}
                             weight="bold"
@@ -268,6 +246,26 @@ const AboutPage: React.FC = () => {
                   </a>
                 ))}
               </div>
+            </div>
+            <div className="mt-12 flex justify-center gap-2">
+              <button
+                type="button"
+                onClick={goToPrev}
+                disabled={!canGoPrev}
+                className="p-2 rounded-full border cursor-pointer border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                aria-label="Previous"
+              >
+                <CaretLeft size={16} weight="bold" />
+              </button>
+              <button
+                type="button"
+                onClick={goToNext}
+                disabled={!canGoNext}
+                className="p-2 rounded-full border cursor-pointer border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                aria-label="Next"
+              >
+                <CaretRight size={16} weight="bold" />
+              </button>
             </div>
           </div>
         </div>

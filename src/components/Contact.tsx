@@ -5,7 +5,7 @@ const Contact: React.FC = () => {
     <section className="h-[500px] py-16 w-full">
       <div className="w-full px-16">
         {/* Contact Section */}
-        <div className="bg-[#f9f9f9] rounded-3xl p-16 mb-16 h-[300px] flex items-center justify-center">
+        <div className="rounded-3xl p-16 mb-16 h-[300px] flex items-center justify-center">
           <div className="text-center space-y-8">
             <h3 className="text-xl md:text-3xl font-medium text-gray-900">
               Questions about my work?
