@@ -3,6 +3,33 @@ import { getProjects, urlFor } from "../lib/sanity";
 import type { SanityProject } from "../types/sanity";
 import { ArrowUpRight } from "@phosphor-icons/react";
 
+/** Project names in the order you want them on the homepage. Must match projectName in Sanity exactly. */
+const PROJECT_DISPLAY_ORDER: string[] = [
+  "Mito Health",
+  "UTickets",
+  "Huli Jaggery Rum",
+  "MyMomentClub",
+  "Jiopay",
+];
+
+function sortProjectsByOrder(
+  projects: SanityProject[],
+  order: string[]
+): SanityProject[] {
+  if (order.length === 0) return projects;
+  const orderLower = order.map((n) => n.trim().toLowerCase());
+  return [...projects].sort((a, b) => {
+    const aName = (a.projectName?.trim() ?? "").toLowerCase();
+    const bName = (b.projectName?.trim() ?? "").toLowerCase();
+    const aIdx = orderLower.findIndex((name) => aName === name || aName.includes(name));
+    const bIdx = orderLower.findIndex((name) => bName === name || bName.includes(name));
+    if (aIdx === -1 && bIdx === -1) return 0;
+    if (aIdx === -1) return 1;
+    if (bIdx === -1) return -1;
+    return aIdx - bIdx;
+  });
+}
+
 const Work: React.FC = () => {
   const [projects, setProjects] = useState<SanityProject[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -14,7 +41,7 @@ const Work: React.FC = () => {
     const fetchProjects = async () => {
       try {
         const data = await getProjects();
-        setProjects(data);
+        setProjects(sortProjectsByOrder(data, PROJECT_DISPLAY_ORDER));
       } catch (err) {
         setError("Failed to load projects");
         console.error("Error fetching projects:", err);
